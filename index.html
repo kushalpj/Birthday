@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🎂 Birthday Surprise 🎉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Handwritten Font -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background: linear-gradient(135deg,#ff512f,#dd2476);
+  min-height:100vh;
+  overflow:hidden;
+  color:#fff;
+  text-align:center;
+}
+
+/* SCREENS */
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.hidden{display:none}
+
+/* BUTTON */
+.btn{
+  padding:16px 40px;
+  font-size:1.2rem;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  background:#fff;
+  color:#dd2476;
+  font-weight:bold;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+  margin-top:20px;
+}
+
+/* COUNTDOWN */
+.countdown{
+  font-size:5rem;
+}
+
+/* MAIN */
+h1{
+  font-size:3rem;
+  text-shadow:0 0 25px rgba(255,255,255,.8);
+}
+
+.typing{
+  font-size:2rem;
+  margin-top:10px;
+}
+
+.msg{
+  margin-top:20px;
+  font-size:1.2rem;
+  max-width:700px;
+}
+
+/* CAKE */
+.cake{
+  margin:35px auto;
+  position:relative;
+  width:220px;
+}
+
+.layer{
+  height:60px;
+  background:#ffeb3b;
+  border-radius:12px;
+  margin-top:6px;
+}
+
+.layer:nth-child(2){background:#ff9800}
+.layer:nth-child(3){background:#ff5722}
+
+.candle{
+  position:absolute;
+  top:-45px;
+  left:50%;
+  transform:translateX(-50%);
+  width:12px;
+  height:40px;
+  background:#fff;
+}
+
+.flame{
+  position:absolute;
+  top:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:16px;
+  height:18px;
+  background:gold;
+  border-radius:50%;
+}
+
+/* CARD PAGE */
+.card-page{
+  background:#0f172a;
+}
+
+/* FLIP CARD */
+.card-wrapper{
+  perspective:1200px;
+}
+
+.card{
+  width:340px;
+  height:460px;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 1s;
+  cursor:pointer;
+}
+
+.card.open{
+  transform:rotateY(180deg);
+}
+
+.card-side{
+  position:absolute;
+  width:100%;
+  height:100%;
+  backface-visibility:hidden;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+}
+
+/* FRONT */
+.front{
+  background:#fff;
+  color:#333;
+}
+
+.front h2{
+  font-family:'Pacifico', cursive;
+  font-size:2rem;
+  color:#dd2476;
+}
+
+.front p{
+  margin-top:15px;
+}
+
+/* BACK */
+.back{
+  background:#fff;
+  color:#333;
+  transform:rotateY(180deg);
+}
+
+.back h3{
+  font-family:'Pacifico', cursive;
+  color:#dd2476;
+  margin-bottom:10px;
+}
+
+.message{
+  font-family:'Pacifico', cursive;
+  font-size:1.05rem;
+  line-height:1.7;
+}
+
+/* PHOTO */
+.photo{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #dd2476;
+  margin-bottom:15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+<div class="screen" id="start">
+  <button class="btn" onclick="start()">🎁 Tap for Birthday Surprise 🎁</button>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="screen hidden" id="count">
+  <div class="countdown" id="num">3</div>
+</div>
+
+<!-- MAIN SURPRISE -->
+<div class="screen hidden" id="main">
+  <h1>🎉 HAPPY BIRTHDAY 🎂</h1>
+  <div class="typing" id="typing"></div>
+
+  <p class="msg">
+    Today is not just a day, it’s a celebration of YOU 💖  
+    May your life be filled with happiness, success, and endless smiles ✨
+  </p>
+
+  <div class="cake">
+    <div class="candle"><div class="flame"></div></div>
+    <div class="layer"></div>
+    <div class="layer"></div>
+    <div class="layer"></div>
+  </div>
+
+  <button class="btn" onclick="openCard()">🎁 Open Your Card</button>
+</div>
+
+<!-- GREETING CARD PAGE -->
+<div class="screen hidden card-page" id="cardPage">
+  <div class="card-wrapper">
+    <div class="card" onclick="flipCard()">
+
+      <!-- FRONT -->
+      <div class="card-side front">
+        <h2>For You 💖</h2>
+        <p>Tap to open</p>
+      </div>
+
+      <!-- BACK -->
+      <div class="card-side back">
+        <!-- 📸 PUT YOUR IMAGE -->
+        <img src="image.jpeg" class="photo" alt="Memory">
+
+        <h3>Dear Special One</h3>
+
+        <!-- ✏️ YOUR MESSAGE -->
+        <p class="message"><br><br>Happy Birthday 🎉 I just want you to know how truly special you are to me. Your presence in my life means more than words can fully express, and I’m really grateful for the warmth, care, and happiness you bring. You matter to me in ways that are deep and genuine, and I hope today reminds you how valued, appreciated, and loved you are—not just today, but always, Never stop being you. <br><br>
+        </p>
+
+        <p style="margin-top:10px;font-family:'Pacifico',cursive;">
+          — From Me 🤍
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const nameText="🎂 PALLAVI 🎂";
+let i=0;
+
+function start(){
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("count").classList.remove("hidden");
+
+  let n=3;
+  const interval=setInterval(()=>{
+    document.getElementById("num").textContent=n;
+    n--;
+    if(n<0){
+      clearInterval(interval);
+      document.getElementById("count").classList.add("hidden");
+      document.getElementById("main").classList.remove("hidden");
+      typeName();
+    }
+  },1000);
+}
+
+function typeName(){
+  if(i<nameText.length){
+    document.getElementById("typing").textContent+=nameText.charAt(i);
+    i++;
+    setTimeout(typeName,120);
+  }
+}
+
+function openCard(){
+  document.getElementById("main").classList.add("hidden");
+  document.getElementById("cardPage").classList.remove("hidden");
+}
+
+function flipCard(){
+  document.querySelector(".card").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
